@@ -1,0 +1,55 @@
+export const metadata = {
+  title: "在 Next.js 中使用 MDX 写作",
+  date: "2026-08-19",
+  description: "介绍如何在 Next.js 16 项目中接入 MDX，实现用 Markdown 撰写博客文章。",
+  tags: ["Next.js", "MDX", "教程"],
+};
+
+## MDX 是什么
+
+MDX 是 Markdown 的超集，允许你在 Markdown 文件中直接编写 JSX。这意味着文章里可以嵌入任意的 React 组件，非常适合技术博客。
+
+## 接入步骤
+
+首先安装依赖：
+
+```bash
+npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
+```
+
+然后在 `next.config.ts` 中启用：
+
+```ts
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: ["remark-gfm"],
+  },
+});
+
+export default withMDX({
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+});
+```
+
+> 注意：Turbopack 下 remark 插件需要用**字符串**形式声明。
+
+## 文章的元数据
+
+每篇文章通过导出一个 `metadata` 对象来描述自己：
+
+```mdx
+export const metadata = {
+  title: "文章标题",
+  date: "2026-08-19",
+  description: "文章摘要",
+  tags: ["标签"],
+};
+```
+
+列表页通过动态 `import()` 读取所有文章的元数据，按日期排序后渲染。
+
+## 小结
+
+MDX 让写作与交互组件无缝结合，配合 Next.js 的静态生成能力，可以在零数据库的情况下搭建一个性能优异的博客。
