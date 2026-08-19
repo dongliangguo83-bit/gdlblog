@@ -15,8 +15,8 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: ["remark-gfm"],
-    rehypePlugins: [],
+    remarkPlugins: ["remark-gfm", "remark-math"],
+    rehypePlugins: ["rehype-katex"],
   },
 });
 
